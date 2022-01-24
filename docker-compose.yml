@@ -2,90 +2,73 @@ version: "3.8"
 services:
 
   elasticsearch_01:
-    build:
-      context: elasticsearch/
-      args:
-        ELK_VERSION: ${ELK_VERSION:-7.16.3}
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
+    container_name: elasticsearch_01
     volumes:
-      - type: bind
-        source: ./elasticsearch/elasticsearch.yml
-        target: /usr/share/elasticsearch/config/elasticsearch.yml
-        read_only: true
+      - es_data_01:/usr/share/elasticsearch/data
       #- ${ELASTICSEARCH_DATA:-/data}/elasticsearch_01:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
       - "9300:9300"
     environment:
       - node.name=elasticsearch_01
+      - cluster.name=es-docker-cluster
       - discovery.seed_hosts=elasticsearch_02,elasticsearch_03
       - cluster.initial_master_nodes=elasticsearch_01,elasticsearch_02,elasticsearch_03
       - bootstrap.memory_lock=true
       #- "ES_JAVA_OPTS=-Xms${ES_HEAP_SIZE:-2g} -Xmx${ES_HEAP_SIZE:-2g}"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
+    #ulimits:
+    #  memlock:
+    #    soft: -1
+    #    hard: -1
 
 
 
   elasticsearch_02:
-    build:
-      context: elasticsearch/
-      args:
-        ELK_VERSION: ${ELK_VERSION:-7.16.3}
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
+    container_name: elasticsearch_02
     volumes:
-      - type: bind
-        source: ./elasticsearch/elasticsearch.yml
-        target: /usr/share/elasticsearch/config/elasticsearch.yml
-        read_only: true
+      - es_data_02:/usr/share/elasticsearch/data
       #- ${ELASTICSEARCH_DATA:-/data}/elasticsearch_02:/usr/share/elasticsearch/data
     environment:
       - node.name=elasticsearch_02
+      - cluster.name=es-docker-cluster
       - discovery.seed_hosts=elasticsearch_01,elasticsearch_03
       - cluster.initial_master_nodes=elasticsearch_01,elasticsearch_02,elasticsearch_03
       - bootstrap.memory_lock=true
       #- "ES_JAVA_OPTS=-Xms${ES_HEAP_SIZE:-2g} -Xmx${ES_HEAP_SIZE:-2g}"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
+    #ulimits:
+    #  memlock:
+    #    soft: -1
+    #    hard: -1
 
 
 
   elasticsearch_03:
-      build:
-        context: elasticsearch/
-        args:
-          ELK_VERSION: ${ELK_VERSION:-7.16.3}
-      volumes:
-        - type: bind
-          source: ./elasticsearch/elasticsearch.yml
-          target: /usr/share/elasticsearch/config/elasticsearch.yml
-          read_only: true
-        #- ${ELASTICSEARCH_DATA:-/data}/elasticsearch_03:/usr/share/elasticsearch/data
-      environment:
-        - node.name=elasticsearch_03
-        - discovery.seed_hosts=elasticsearch_01,elasticsearch_02
-        - cluster.initial_master_nodes=elasticsearch_01,elasticsearch_02,elasticsearch_03
-        - bootstrap.memory_lock=true
-        #- "ES_JAVA_OPTS=-Xms${ES_HEAP_SIZE:-2g} -Xmx${ES_HEAP_SIZE:-2g}"
-      ulimits:
-        memlock:
-          soft: -1
-          hard: -1
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
+    container_name: elasticsearch_03
+    volumes:
+      - es_data_03:/usr/share/elasticsearch/data
+      #- ${ELASTICSEARCH_DATA:-/data}/elasticsearch_03:/usr/share/elasticsearch/data
+    environment:
+      - node.name=elasticsearch_03
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=elasticsearch_01,elasticsearch_02
+      - cluster.initial_master_nodes=elasticsearch_01,elasticsearch_02,elasticsearch_03
+      - bootstrap.memory_lock=true
+      #- "ES_JAVA_OPTS=-Xms${ES_HEAP_SIZE:-2g} -Xmx${ES_HEAP_SIZE:-2g}"
+    #ulimits:
+    #  memlock:
+    #    soft: -1
+    #    hard: -1
 
 
 
   kibana:
-    build:
-      context: kibana/
-      args:
-        ELK_VERSION: ${ELK_VERSION:-7.16.3}
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
     volumes:
-      - type: bind
-        source: ./kibana/kibana.yml
-        target: /usr/share/kibana/config/kibana.yml
-        read_only: true
+      - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+        #read_only: true
     ports:
       - 5601:5601
     depends_on:
@@ -98,7 +81,7 @@ services:
   web_server:
     build:
       context: ./nginx
-    restart: always
+    #restart: always
     ports:
       - 80:80
     volumes:
