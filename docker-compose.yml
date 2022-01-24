@@ -11,13 +11,13 @@ services:
       - "9200:9200"
       - "9300:9300"
     environment:
-      - node.name=elasticsearch_01
+      #- node.name=elasticsearch_01
       - cluster.name=es-docker-cluster
       - discovery.seed_hosts=elasticsearch_02,elasticsearch_03
       - cluster.initial_master_nodes=elasticsearch_01,elasticsearch_02,elasticsearch_03
       - bootstrap.memory_lock=true
-      - #xpack.license.self_generated.type: basic
-      - #xpack.monitoring.collection.enabled: true
+      #- xpack.license.self_generated.type: basic
+      #- xpack.monitoring.collection.enabled: true
       #- "ES_JAVA_OPTS=-Xms${ES_HEAP_SIZE:-2g} -Xmx${ES_HEAP_SIZE:-2g}"
     #ulimits:
     #  memlock:
@@ -33,13 +33,13 @@ services:
       - ./es_data_02:/usr/share/elasticsearch/data
       #- ${ELASTICSEARCH_DATA:-/data}/elasticsearch_02:/usr/share/elasticsearch/data
     environment:
-      - node.name=elasticsearch_02
+      #- node.name=elasticsearch_02
       - cluster.name=es-docker-cluster
       - discovery.seed_hosts=elasticsearch_01,elasticsearch_03
       - cluster.initial_master_nodes=elasticsearch_01,elasticsearch_02,elasticsearch_03
       - bootstrap.memory_lock=true
-      - #xpack.license.self_generated.type: basic
-      - #xpack.monitoring.collection.enabled: true
+      #- xpack.license.self_generated.type: basic
+      #- xpack.monitoring.collection.enabled: true
       #- "ES_JAVA_OPTS=-Xms${ES_HEAP_SIZE:-2g} -Xmx${ES_HEAP_SIZE:-2g}"
     #ulimits:
     #  memlock:
@@ -55,13 +55,13 @@ services:
       - ./es_data_03:/usr/share/elasticsearch/data
       #- ${ELASTICSEARCH_DATA:-/data}/elasticsearch_03:/usr/share/elasticsearch/data
     environment:
-      - node.name=elasticsearch_03
+      #- node.name=elasticsearch_03
       - cluster.name=es-docker-cluster
       - discovery.seed_hosts=elasticsearch_01,elasticsearch_02
       - cluster.initial_master_nodes=elasticsearch_01,elasticsearch_02,elasticsearch_03
       - bootstrap.memory_lock=true
-      - #xpack.license.self_generated.type: basic
-      - #xpack.monitoring.collection.enabled: true
+      #- xpack.license.self_generated.type: basic
+      #- xpack.monitoring.collection.enabled: true
       #- "ES_JAVA_OPTS=-Xms${ES_HEAP_SIZE:-2g} -Xmx${ES_HEAP_SIZE:-2g}"
     #ulimits:
     #  memlock:
