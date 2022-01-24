@@ -2,7 +2,7 @@ version: '3'
 services:
   es01:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
-    container_name: es01
+    #container_name: es01
     environment:
       - node.name=es01
       - cluster.name=es-docker-cluster
@@ -23,7 +23,7 @@ services:
 
   es02:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
-    container_name: es02
+    #container_name: es02
     environment:
       - node.name=es02
       - cluster.name=es-docker-cluster
@@ -42,7 +42,7 @@ services:
 
   es03:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
-    container_name: es03
+    #container_name: es03
     environment:
       - node.name=es03
       - cluster.name=es-docker-cluster
@@ -61,7 +61,7 @@ services:
 
   kib01:
     image: docker.elastic.co/kibana/kibana:7.16.3
-    container_name: kib01
+    #container_name: kib01
     ports:
       - 5601:5601
     environment:
