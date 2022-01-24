@@ -52,27 +52,27 @@ services:
 
 
 
-elasticsearch_03:
-    build:
-      context: elasticsearch/
-      args:
-        ELK_VERSION: ${ELK_VERSION:-7.16.3}
-    volumes:
-      - type: bind
-        source: ./elasticsearch/elasticsearch.yml
-        target: /usr/share/elasticsearch/config/elasticsearch.yml
-        read_only: true
-      #- ${ELASTICSEARCH_DATA:-/data}/elasticsearch_03:/usr/share/elasticsearch/data
-    environment:
-      - node.name=elasticsearch_03
-      - discovery.seed_hosts=elasticsearch_01,elasticsearch_02
-      - cluster.initial_master_nodes=elasticsearch_01,elasticsearch_02,elasticsearch_03
-      - bootstrap.memory_lock=true
-      #- "ES_JAVA_OPTS=-Xms${ES_HEAP_SIZE:-2g} -Xmx${ES_HEAP_SIZE:-2g}"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
+  elasticsearch_03:
+      build:
+        context: elasticsearch/
+        args:
+          ELK_VERSION: ${ELK_VERSION:-7.16.3}
+      volumes:
+        - type: bind
+          source: ./elasticsearch/elasticsearch.yml
+          target: /usr/share/elasticsearch/config/elasticsearch.yml
+          read_only: true
+        #- ${ELASTICSEARCH_DATA:-/data}/elasticsearch_03:/usr/share/elasticsearch/data
+      environment:
+        - node.name=elasticsearch_03
+        - discovery.seed_hosts=elasticsearch_01,elasticsearch_02
+        - cluster.initial_master_nodes=elasticsearch_01,elasticsearch_02,elasticsearch_03
+        - bootstrap.memory_lock=true
+        #- "ES_JAVA_OPTS=-Xms${ES_HEAP_SIZE:-2g} -Xmx${ES_HEAP_SIZE:-2g}"
+      ulimits:
+        memlock:
+          soft: -1
+          hard: -1
 
 
 
