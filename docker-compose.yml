@@ -5,7 +5,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
     #container_name: elasticsearch_01
     volumes:
-      - es_data_01:/usr/share/elasticsearch/data
+      - ./es_data_01:/usr/share/elasticsearch/data
       #- ${ELASTICSEARCH_DATA:-/data}/elasticsearch_01:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
@@ -30,7 +30,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
     #container_name: elasticsearch_02
     volumes:
-      - es_data_02:/usr/share/elasticsearch/data
+      - ./es_data_02:/usr/share/elasticsearch/data
       #- ${ELASTICSEARCH_DATA:-/data}/elasticsearch_02:/usr/share/elasticsearch/data
     environment:
       - node.name=elasticsearch_02
@@ -38,8 +38,8 @@ services:
       - discovery.seed_hosts=elasticsearch_01,elasticsearch_03
       - cluster.initial_master_nodes=elasticsearch_01,elasticsearch_02,elasticsearch_03
       - bootstrap.memory_lock=true
-      - xpack.license.self_generated.type: basic
-      - xpack.monitoring.collection.enabled: true
+      - #xpack.license.self_generated.type: basic
+      - #xpack.monitoring.collection.enabled: true
       #- "ES_JAVA_OPTS=-Xms${ES_HEAP_SIZE:-2g} -Xmx${ES_HEAP_SIZE:-2g}"
     #ulimits:
     #  memlock:
@@ -52,7 +52,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
     #container_name: elasticsearch_03
     volumes:
-      - es_data_03:/usr/share/elasticsearch/data
+      - ./es_data_03:/usr/share/elasticsearch/data
       #- ${ELASTICSEARCH_DATA:-/data}/elasticsearch_03:/usr/share/elasticsearch/data
     environment:
       - node.name=elasticsearch_03
@@ -60,8 +60,8 @@ services:
       - discovery.seed_hosts=elasticsearch_01,elasticsearch_02
       - cluster.initial_master_nodes=elasticsearch_01,elasticsearch_02,elasticsearch_03
       - bootstrap.memory_lock=true
-      - xpack.license.self_generated.type: basic
-      - xpack.monitoring.collection.enabled: true
+      - #xpack.license.self_generated.type: basic
+      - #xpack.monitoring.collection.enabled: true
       #- "ES_JAVA_OPTS=-Xms${ES_HEAP_SIZE:-2g} -Xmx${ES_HEAP_SIZE:-2g}"
     #ulimits:
     #  memlock:
